@@ -4,47 +4,88 @@ import Sidebar from './components/Sidebar';
 import TodoList from './components/TodoList';
 import CalendarView from './components/CalendarView';
 import ThemeSelector from './components/ThemeSelector';
+import Login from './components/Auth/Login';
+import Signup from './components/Auth/Signup';
+import SubtleGridBackground from './components/SubtleGridBackground';
+import { AuthProvider, useAuth } from './contexts/AuthContext';
+import { subscribeTodos, addTodo as addTodoToDb, updateTodo as updateTodoInDb, deleteTodo as deleteTodoFromDb, migrateLocalTodos } from './firebase/db';
 
-function App() {
-  const [todos, setTodos] = useState(() => {
-    const saved = localStorage.getItem('todos');
-    return saved ? JSON.parse(saved) : [];
-  });
-
+function AppContent() {
+  const { user } = useAuth();
+  const [todos, setTodos] = useState([]);
   const [currentView, setCurrentView] = useState('all');
   const [theme, setTheme] = useState(() => {
     return localStorage.getItem('theme') || 'blue';
   });
   const [showCalendar, setShowCalendar] = useState(false);
   const [showThemeSelector, setShowThemeSelector] = useState(false);
+  const [showSignup, setShowSignup] = useState(false);
+  const [migrated, setMigrated] = useState(false);
 
-  useEffect(() => {
-    localStorage.setItem('todos', JSON.stringify(todos));
-  }, [todos]);
-
+  // Theme persistence
   useEffect(() => {
     localStorage.setItem('theme', theme);
     document.body.className = `theme-${theme}`;
   }, [theme]);
 
-  const addTodo = (todo) => {
-    setTodos([...todos, { ...todo, id: Date.now(), completed: false, createdAt: new Date().toISOString() }]);
+  // Migrate localStorage todos to Firestore on first login
+  useEffect(() => {
+    if (user && !migrated) {
+      const localTodos = localStorage.getItem('todos');
+      if (localTodos) {
+        const parsedTodos = JSON.parse(localTodos);
+        if (parsedTodos.length > 0) {
+          migrateLocalTodos(user.uid, parsedTodos).then(() => {
+            localStorage.removeItem('todos');
+            setMigrated(true);
+          });
+        }
+      }
+      setMigrated(true);
+    }
+  }, [user, migrated]);
+
+  // Subscribe to user's todos from Firestore
+  useEffect(() => {
+    if (user) {
+      const unsubscribe = subscribeTodos(user.uid, (todos) => {
+        setTodos(todos);
+      });
+      return unsubscribe;
+    } else {
+      setTodos([]);
+    }
+  }, [user]);
+
+  const addTodo = async (todo) => {
+    if (user) {
+      await addTodoToDb(user.uid, {
+        ...todo,
+        completed: false,
+        createdAt: new Date().toISOString()
+      });
+    }
   };
 
-  const toggleTodo = (id) => {
-    setTodos(todos.map(todo =>
-      todo.id === id ? { ...todo, completed: !todo.completed } : todo
-    ));
+  const toggleTodo = async (id) => {
+    if (user) {
+      const todo = todos.find(t => t.id === id);
+      if (todo) {
+        await updateTodoInDb(user.uid, id, { completed: !todo.completed });
+      }
+    }
   };
 
-  const deleteTodo = (id) => {
-    setTodos(todos.filter(todo => todo.id !== id));
+  const deleteTodo = async (id) => {
+    if (user) {
+      await deleteTodoFromDb(user.uid, id);
+    }
   };
 
-  const updateTodo = (id, updates) => {
-    setTodos(todos.map(todo =>
-      todo.id === id ? { ...todo, ...updates } : todo
-    ));
+  const updateTodo = async (id, updates) => {
+    if (user) {
+      await updateTodoInDb(user.uid, id, updates);
+    }
   };
 
   const getFilteredTodos = () => {
@@ -88,14 +129,26 @@ function App() {
     }).length
   };
 
+  // Show auth pages if not logged in
+  if (!user) {
+    return showSignup ? (
+      <Signup onSwitchToLogin={() => setShowSignup(false)} />
+    ) : (
+      <Login onSwitchToSignup={() => setShowSignup(true)} />
+    );
+  }
+
   return (
     <div className="app-container">
+      <SubtleGridBackground opacity={0.1} />
+
       <Sidebar
         currentView={currentView}
         setCurrentView={setCurrentView}
         stats={stats}
         onCalendarClick={() => setShowCalendar(!showCalendar)}
         onThemeClick={() => setShowThemeSelector(!showThemeSelector)}
+        user={user}
       />
 
       <main className="main-content">
@@ -124,6 +177,14 @@ function App() {
         />
       )}
     </div>
+  );
+}
+
+function App() {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
   );
 }
 

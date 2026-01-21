@@ -1,10 +1,11 @@
 import './Sidebar.css';
 import {
   FiInbox, FiStar, FiCalendar, FiCheckCircle,
-  FiClock, FiDroplet, FiGrid
+  FiClock, FiDroplet, FiGrid, FiLogOut
 } from 'react-icons/fi';
+import { logout } from '../firebase/auth';
 
-const Sidebar = ({ currentView, setCurrentView, stats, onCalendarClick, onThemeClick }) => {
+const Sidebar = ({ currentView, setCurrentView, stats, onCalendarClick, onThemeClick, user }) => {
   const menuItems = [
     { id: 'all', icon: FiInbox, label: 'All Tasks', count: stats.total },
     { id: 'today', icon: FiClock, label: 'Today', count: stats.today },
@@ -12,6 +13,10 @@ const Sidebar = ({ currentView, setCurrentView, stats, onCalendarClick, onThemeC
     { id: 'important', icon: FiStar, label: 'Important', count: null },
     { id: 'completed', icon: FiCheckCircle, label: 'Completed', count: stats.completed },
   ];
+
+  const handleLogout = async () => {
+    await logout();
+  };
 
   return (
     <aside className="sidebar glass">
@@ -55,6 +60,27 @@ const Sidebar = ({ currentView, setCurrentView, stats, onCalendarClick, onThemeC
       </nav>
 
       <div className="sidebar-footer">
+        {user && (
+          <div className="user-menu glass-light">
+            <div className="user-info">
+              <div className="user-avatar">
+                {user.displayName ? user.displayName.charAt(0).toUpperCase() : user.email.charAt(0).toUpperCase()}
+              </div>
+              <div className="user-details">
+                <span className="user-name">{user.displayName || 'User'}</span>
+                <span className="user-email">{user.email}</span>
+              </div>
+            </div>
+            <button
+              className="logout-btn"
+              onClick={handleLogout}
+              title="Logout"
+            >
+              <FiLogOut />
+            </button>
+          </div>
+        )}
+
         <div className="stats-card glass-light">
           <div className="stat-item">
             <span className="stat-label">Pending</span>

@@ -10,32 +10,32 @@
   --theme-teal: #5AC8FA;
   --theme-red: #FF3B30;
   --theme-yellow: #FFCC00;
-  
+
   /* Default Theme */
   --primary-color: var(--theme-blue);
   --primary-hover: #0051D5;
-  
+
   /* Mac-style colors */
   --bg-primary: #1c1c1e;
   --bg-secondary: #2c2c2e;
   --bg-tertiary: #3a3a3c;
   --bg-glass: rgba(44, 44, 46, 0.7);
   --bg-glass-light: rgba(58, 58, 60, 0.5);
-  
+
   --text-primary: #ffffff;
   --text-secondary: #ebebf5;
   --text-tertiary: #8e8e93;
-  
+
   --border-color: rgba(255, 255, 255, 0.1);
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
   --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
   --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
-  
+
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 16px;
   --radius-xl: 20px;
-  
+
   --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -47,7 +47,7 @@
 
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  background: linear-gradient(135deg, #1a1a1d 0%, #2d1b3d 100%);
+  background: #000 url('/grid-bg.png') center/cover fixed;
   color: var(--text-primary);
   min-height: 100vh;
   overflow-x: hidden;
@@ -102,6 +102,7 @@ body {
     opacity: 0;
     transform: translateY(10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -113,6 +114,7 @@ body {
     opacity: 0;
     transform: translateX(-20px);
   }
+
   to {
     opacity: 1;
     transform: translateX(0);
@@ -124,6 +126,7 @@ body {
     opacity: 0;
     transform: scale(0.95);
   }
+
   to {
     opacity: 1;
     transform: scale(1);
@@ -131,9 +134,12 @@ body {
 }
 
 @keyframes pulse {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 1;
   }
+
   50% {
     opacity: 0.5;
   }
@@ -165,22 +171,62 @@ button:active {
 }
 
 /* Input styles */
-input, textarea {
+input,
+textarea {
   font-family: inherit;
   outline: none;
   transition: var(--transition);
 }
 
 /* Utility classes */
-.text-primary { color: var(--text-primary); }
-.text-secondary { color: var(--text-secondary); }
-.text-tertiary { color: var(--text-tertiary); }
+.text-primary {
+  color: var(--text-primary);
+}
 
-.theme-blue { --primary-color: var(--theme-blue); --primary-hover: #0051D5; }
-.theme-purple { --primary-color: var(--theme-purple); --primary-hover: #8E3FBE; }
-.theme-pink { --primary-color: var(--theme-pink); --primary-hover: #D70035; }
-.theme-orange { --primary-color: var(--theme-orange); --primary-hover: #CC7700; }
-.theme-green { --primary-color: var(--theme-green); --primary-hover: #248A3D; }
-.theme-teal { --primary-color: var(--theme-teal); --primary-hover: #32A0D8; }
-.theme-red { --primary-color: var(--theme-red); --primary-hover: #D70015; }
-.theme-yellow { --primary-color: var(--theme-yellow); --primary-hover: #CCA300; }
+.text-secondary {
+  color: var(--text-secondary);
+}
+
+.text-tertiary {
+  color: var(--text-tertiary);
+}
+
+.theme-blue {
+  --primary-color: var(--theme-blue);
+  --primary-hover: #0051D5;
+}
+
+.theme-purple {
+  --primary-color: var(--theme-purple);
+  --primary-hover: #8E3FBE;
+}
+
+.theme-pink {
+  --primary-color: var(--theme-pink);
+  --primary-hover: #D70035;
+}
+
+.theme-orange {
+  --primary-color: var(--theme-orange);
+  --primary-hover: #CC7700;
+}
+
+.theme-green {
+  --primary-color: var(--theme-green);
+  --primary-hover: #248A3D;
+}
+
+.theme-teal {
+  --primary-color: var(--theme-teal);
+  --primary-hover: #32A0D8;
+}
+
+.theme-red {
+  --primary-color: var(--theme-red);
+  --primary-hover: #D70015;
+}
+
+.theme-yellow {
+  --primary-color: var(--theme-yellow);
+  --primary-hover: #CCA300;
+}
