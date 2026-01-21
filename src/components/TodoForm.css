@@ -169,6 +169,8 @@
     .todo-form-overlay {
         padding: 0;
         align-items: flex-start;
+        position: fixed;
+        overflow: hidden;
     }
 
     .form-grid {
@@ -178,7 +180,9 @@
     .todo-form {
         max-width: 100%;
         height: 100vh;
+        height: 100dvh;
         max-height: 100vh;
+        max-height: 100dvh;
         border-radius: 0;
         margin: 0;
         display: flex;
@@ -194,27 +198,49 @@
     .form-body {
         flex: 1;
         overflow-y: auto;
+        overflow-x: hidden;
         -webkit-overflow-scrolling: touch;
         padding: 20px;
-        padding-bottom: 100px;
+        padding-bottom: 120px;
+        min-height: 0;
     }
 
     .form-footer {
         flex-shrink: 0;
-        position: fixed;
+        position: sticky;
         bottom: 0;
         left: 0;
         right: 0;
+        width: 100%;
         background: var(--bg-primary);
         border-top: 1px solid var(--border-color);
         padding: 16px 20px;
+        padding-bottom: calc(16px + env(safe-area-inset-bottom));
         box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.3);
+        z-index: 100;
+    }
+
+    .form-footer {
+        display: flex;
+        gap: 12px;
     }
 
     .btn-primary,
     .btn-secondary {
         flex: 1;
-        padding: 14px 20px;
+        padding: 16px 20px;
         font-size: 16px;
+        font-weight: 600;
+        min-height: 48px;
+        touch-action: manipulation;
+    }
+
+    /* Ensure inputs don't cause layout issues */
+    .form-input {
+        font-size: 16px;
+    }
+
+    .task-input {
+        font-size: 18px;
     }
 }
