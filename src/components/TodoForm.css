@@ -168,8 +168,7 @@
 @media (max-width: 768px) {
     .todo-form-overlay {
         padding: 0;
-        align-items: stretch;
-        overflow-y: auto;
+        align-items: flex-start;
     }
 
     .form-grid {
@@ -178,10 +177,18 @@
 
     .todo-form {
         max-width: 100%;
-        min-height: 100vh;
-        max-height: none;
+        height: 100vh;
+        max-height: 100vh;
         border-radius: 0;
         margin: 0;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-header {
+        flex-shrink: 0;
+        background: var(--bg-primary);
+        border-bottom: 1px solid var(--border-color);
     }
 
     .form-body {
@@ -189,19 +196,25 @@
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
         padding: 20px;
-    }
-
-    .form-header {
-        position: sticky;
-        top: 0;
-        background: var(--bg-primary);
-        z-index: 10;
+        padding-bottom: 100px;
     }
 
     .form-footer {
-        position: sticky;
+        flex-shrink: 0;
+        position: fixed;
         bottom: 0;
+        left: 0;
+        right: 0;
         background: var(--bg-primary);
-        z-index: 10;
+        border-top: 1px solid var(--border-color);
+        padding: 16px 20px;
+        box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .btn-primary,
+    .btn-secondary {
+        flex: 1;
+        padding: 14px 20px;
+        font-size: 16px;
     }
 }
