@@ -9,7 +9,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 1000;
+    z-index: 9999;
     animation: fadeIn 0.2s ease-out;
     padding: 20px;
 }
@@ -24,6 +24,8 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    position: relative;
+    z-index: 10000;
 }
 
 .form-header {
@@ -160,6 +162,11 @@
 }
 
 @media (max-width: 768px) {
+    .todo-form-overlay {
+        padding: 0;
+        align-items: flex-start;
+    }
+
     .form-grid {
         grid-template-columns: 1fr;
     }
@@ -167,6 +174,13 @@
     .todo-form {
         max-width: 100%;
         max-height: 100vh;
+        height: 100vh;
         border-radius: 0;
+    }
+
+    .form-body {
+        flex: 1;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
     }
 }
