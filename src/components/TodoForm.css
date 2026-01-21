@@ -4,14 +4,17 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.7);
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.8);
     backdrop-filter: blur(8px);
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 9999;
+    z-index: 99999;
     animation: fadeIn 0.2s ease-out;
     padding: 20px;
+    overflow-y: auto;
 }
 
 .todo-form {
@@ -25,7 +28,8 @@
     display: flex;
     flex-direction: column;
     position: relative;
-    z-index: 10000;
+    z-index: 100000;
+    background: var(--bg-primary);
 }
 
 .form-header {
@@ -164,7 +168,8 @@
 @media (max-width: 768px) {
     .todo-form-overlay {
         padding: 0;
-        align-items: flex-start;
+        align-items: stretch;
+        overflow-y: auto;
     }
 
     .form-grid {
@@ -173,14 +178,30 @@
 
     .todo-form {
         max-width: 100%;
-        max-height: 100vh;
-        height: 100vh;
+        min-height: 100vh;
+        max-height: none;
         border-radius: 0;
+        margin: 0;
     }
 
     .form-body {
         flex: 1;
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
+        padding: 20px;
+    }
+
+    .form-header {
+        position: sticky;
+        top: 0;
+        background: var(--bg-primary);
+        z-index: 10;
+    }
+
+    .form-footer {
+        position: sticky;
+        bottom: 0;
+        background: var(--bg-primary);
+        z-index: 10;
     }
 }
