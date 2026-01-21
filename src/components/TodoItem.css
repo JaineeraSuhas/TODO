@@ -1,0 +1,230 @@
+.todo-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 20px;
+    border-radius: var(--radius-md);
+    transition: var(--transition);
+    animation: slideIn 0.3s ease-out backwards;
+}
+
+.todo-item:hover {
+    background: var(--bg-secondary);
+    transform: translateX(4px);
+}
+
+.todo-item.completed {
+    opacity: 0.6;
+}
+
+.todo-item.completed .todo-text {
+    text-decoration: line-through;
+    color: var(--text-tertiary);
+}
+
+.checkbox {
+    width: 24px;
+    height: 24px;
+    border: 2px solid var(--border-color);
+    border-radius: 6px;
+    background: transparent;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+    transition: var(--transition);
+}
+
+.checkbox:hover {
+    border-color: var(--primary-color);
+    background: rgba(0, 122, 255, 0.1);
+}
+
+.checkbox svg {
+    font-size: 16px;
+}
+
+.todo-item.completed .checkbox {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.todo-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+}
+
+.todo-main {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.todo-text {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text-primary);
+    word-wrap: break-word;
+}
+
+.todo-note {
+    font-size: 14px;
+    color: var(--text-tertiary);
+    line-height: 1.5;
+    margin: 0;
+}
+
+.todo-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.meta-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    background: var(--bg-tertiary);
+    color: var(--text-secondary);
+}
+
+.meta-badge svg {
+    font-size: 14px;
+}
+
+.list-badge {
+    background: rgba(175, 82, 222, 0.2);
+    color: #AF52DE;
+}
+
+.date-badge {
+    background: rgba(0, 122, 255, 0.2);
+    color: #007AFF;
+}
+
+.repeat-badge {
+    background: rgba(52, 199, 89, 0.2);
+    color: #34C759;
+}
+
+.priority-badge {
+    background: rgba(255, 59, 48, 0.2);
+    color: #FF3B30;
+}
+
+.todo-actions {
+    display: flex;
+    gap: 8px;
+    opacity: 0;
+    transition: var(--transition);
+}
+
+.todo-item:hover .todo-actions {
+    opacity: 1;
+}
+
+.action-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-sm);
+    background: var(--bg-tertiary);
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    transition: var(--transition);
+}
+
+.action-btn:hover {
+    transform: scale(1.1);
+}
+
+.edit-btn:hover {
+    background: var(--primary-color);
+    color: white;
+}
+
+.delete-btn:hover {
+    background: #FF3B30;
+    color: white;
+}
+
+.edit-form {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.edit-input,
+.edit-textarea {
+    width: 100%;
+    padding: 12px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    font-size: 15px;
+    resize: vertical;
+}
+
+.edit-input:focus,
+.edit-textarea:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+}
+
+.edit-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.save-btn,
+.cancel-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    font-weight: 500;
+    transition: var(--transition);
+}
+
+.save-btn {
+    background: var(--primary-color);
+    color: white;
+}
+
+.save-btn:hover {
+    background: var(--primary-hover);
+}
+
+.cancel-btn {
+    background: var(--bg-tertiary);
+    color: var(--text-secondary);
+}
+
+.cancel-btn:hover {
+    background: var(--bg-secondary);
+}
+
+@media (max-width: 768px) {
+    .todo-item {
+        padding: 16px;
+    }
+
+    .todo-actions {
+        opacity: 1;
+    }
+}

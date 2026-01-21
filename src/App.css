@@ -1,0 +1,25 @@
+.app-container {
+    display: flex;
+    width: 100%;
+    max-width: 1400px;
+    height: 90vh;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    animation: scaleIn 0.5s ease-out;
+}
+
+.main-content {
+    flex: 1;
+    background: var(--bg-primary);
+    overflow-y: auto;
+    position: relative;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .app-container {
+        flex-direction: column;
+        height: 95vh;
+    }
+}
